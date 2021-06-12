@@ -1,0 +1,64 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    background-color: #e0e0e0;
+}
+
+.top{
+    font-size: larger;
+    font-weight: bold;
+    background-color: cornflowerblue;
+    padding: 10px;
+    margin-bottom: 30px;
+    height: 20pt;
+}
+
+.top_block{
+    float: left;
+    margin-left: 20px;
+    height: max-content;
+}
+
+
+.post_box{
+    font-size: larger;
+    background-color: whitesmoke;
+    padding: 20px;
+    margin: 5px 10% 10px 3%;
+}
+
+
+.messages_list{
+    margin: 25px 10% 20px 3%;
+    font-size: 14pt;
+}
+
+.message_box{
+    margin-top: 15px;
+    background-color: whitesmoke;
+}
+
+.message_info{
+    height: fit-content;
+    background-color: rgba(100, 149, 237, 0.6);
+    height: 19pt;
+    padding: 5px;
+}
+
+.rating_box{
+    margin-right: 20px;
+    float: left;
+}
+
+.message{
+    padding: 10px;
+}
+
+.vote_button{
+    font-family: "Courier New";
+    font-weight: bold;
+    font-size: 15pt;
+}

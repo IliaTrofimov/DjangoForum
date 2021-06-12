@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}"/>
+</head>
+<body>
+    <div class="top">
+        <div class="top_block">Forum</div>
+        <div class="top_block">Next post</div>
+        <div class="top_block">Previous post</div>
+    </div>
+    <div class="post_box">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text }}</p>
+    </div>
+    <div class="messages_list">
+        {% for message in post.get_answers %}
+        <div class="message_box">
+            <div class="message_info">
+                <div class="rating_box">
+                    <input type="button" value=" + " class="vote_button"/>
+                    {{ message.rating }}
+                    <input type="button" value=" - " class="vote_button"/>
+                </div>
+                {% if message.author is not None %} {{ message.author }} {% else %} message #{{ message.id }} {% endif %}
+                {% if message.root_message is not None %}
+                    replies to
+                    {% if message.root_message.author is not None %}
+                        {{ message.root_message.author }}
+                    {% else %}
+                        message #{{ message.root_message.id }}
+                    {% endif %}
+                {% endif %}</div>
+            <div class="message">{{ message.text }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

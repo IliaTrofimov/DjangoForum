@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Forum</title>
+</head>
+<body>
+    <h1>Welcome to...</h1>
+    <h2>Ilia Trofimov's forum for political discussions<br></h2>
+    <h3>Top-10 hot discussions</h3>
+    <ul>
+        {%  for post in best_posts_list %}
+        <li>
+            <h3> ({{ post.rating }}) <a href="/forum/{{ post.id }}/">{{ post.title }}</a></h3>
+            {{ post.brief_info }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

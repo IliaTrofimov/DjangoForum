@@ -1,20 +1,47 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>My Forum</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}"/>
 </head>
 <body>
-    <h1>Welcome to...</h1>
-    <h2>Ilia Trofimov's forum for political discussions<br></h2>
-    <h3>Top-10 hot discussions</h3>
-    <ul>
-        {%  for post in best_posts_list %}
-        <li>
-            <h3> ({{ post.rating }}) <a href="/forum/{{ post.id }}/">{{ post.title }}</a></h3>
-            {{ post.brief_info }}
-        </li>
+    <div class="top">
+        <div class="top_block">
+            <h3>Forum for political discussions</h3>
+        </div>
+        <div class="top_block"> | </div>
+        <div class="top_block"> <h3><a href="{% url 'forum:new_post' %}">Add new post</a></h3> </div>
+    </div>
+    <div class="post_box">
+        <h3 align="center">Best posts</h3>
+    </div>
+    <div class="messages_list">
+        {% for post in page_obj %}
+        <div class="message_box">
+            <div class="message_info">
+                ({{ post.rating }}) {{ post.get_author }} -
+                <a href="{% url 'forum:post_details' post.id %}">{{ post.title }}</a>
+            </div>
+            <div class="message">{{ post.brief_info }}</div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
+    <div class="pagination" align="center">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 </body>
 </html>

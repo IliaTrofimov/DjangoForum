@@ -7,19 +7,29 @@ body{
     background-color: #e0e0e0;
 }
 
+
+.pagination{
+    margin-bottom: 20px
+}
+
+
 .top{
-    font-size: larger;
-    font-weight: bold;
+    font-size: 23pt;
+    font-weight: 900;
     background-color: cornflowerblue;
     padding: 10px;
     margin-bottom: 30px;
-    height: 20pt;
+    height: 24pt;
+    color: #f1f1f1;;
 }
+.top a{ text-decoration: none; }
+.top a:visited{ color: #f1f1f1; }
+.top a:hover{ color: white; }
+.top a:active{ color: white; }
 
 .top_block{
     float: left;
     margin-left: 20px;
-    height: max-content;
 }
 
 
@@ -27,22 +37,27 @@ body{
     font-size: larger;
     background-color: whitesmoke;
     padding: 20px;
-    margin: 5px 10% 10px 3%;
+    margin: 5px 20% -10px 15%;
+    border: 0px solid;
+    border-radius: 15px;
 }
 
 
 .messages_list{
-    margin: 25px 10% 20px 3%;
+    margin: 0 20% 40px 15%;
+    padding-top: 40px;
     font-size: 14pt;
 }
 
 .message_box{
     margin-top: 15px;
     background-color: whitesmoke;
+    border: 0px solid;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .message_info{
-    height: fit-content;
     background-color: rgba(100, 149, 237, 0.6);
     height: 19pt;
     padding: 5px;
@@ -52,13 +67,40 @@ body{
     margin-right: 20px;
     float: left;
 }
+.rating_box a{ text-decoration: none; }
 
 .message{
     padding: 10px;
 }
 
 .vote_button{
-    font-family: "Courier New";
     font-weight: bold;
     font-size: 15pt;
+}
+
+
+.msg_form{
+    font-size: 12pt;
+    padding: 10px
+}
+
+.input_post{
+    width: 97%;
+    font-size: 15pt;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+#input_post_text{
+    min-height: 180pt;
+    resize: none;
+}
+#input_post_author{
+    width: 60%;
+    margin-right: 20px;
+}
+
+.button_submit{
+    font-size: 15pt;
+    padding: 10px;
+    min-width: 100px;
 }

@@ -8,35 +8,71 @@
 </head>
 <body>
     <div class="top">
-        <div class="top_block">Forum</div>
-        <div class="top_block">Next post</div>
-        <div class="top_block">Previous post</div>
+        <div class="top_block"><a href="{% url 'forum:index' %}" }>Forum</a></div>
+        <div class="top_block"> | </div>
+        <div class="top_block"><a href="{% url 'forum:new_post' %}">Add new post</a></div>
+        <div class="top_block"> | </div>
+        <div class="top_block"><a href="{% url 'forum:post_details' post.get_next %}">Next post</a></div>
+        <div class="top_block"> | </div>
+        <div class="top_block"><a href="{% url 'forum:post_details' post.get_prev %}">Previous post</a></div>
     </div>
     <div class="post_box">
+        <div class="message_info">
+            <div class="rating_box">
+                <div class="rating_box">
+                    <a href="{% url 'forum:post_vote_up' post.id %}">&#9650;</a>
+                    {{ post.rating }}
+                    <a href="{% url 'forum:post_vote_down' post.id %}">&#9660;</a>
+                </div>
+            </div>
+            {{ post.get_author }}
+        </div>
         <h1>{{ post.title }}</h1>
         <p>{{ post.text }}</p>
     </div>
     <div class="messages_list">
-        {% for message in post.get_answers %}
+        <div class="message_box">
+            <form action="/forum/{{ post.id }}/new_msg" method="post" class="msg_form">
+            {% csrf_token %}
+                <p>Leave message</p>
+            <p><textarea name="post_text" placeholder="Message text" class="input_post" id="input_post_text"></textarea></p>
+            <p>
+                <input type="text" name="post_author" placeholder="Author" class="input_post" id="input_post_author">
+                <input type="checkbox" name="post_author_radio" value="on" onchange="toggle_anonymous(self)">
+                    Send as anonymous
+                </input>
+            </p>
+            <p><input type="submit" value="OK" class="button_submit"></p>
+        </form>
+        </div>
+        {% for msg in object_list %}
         <div class="message_box">
             <div class="message_info">
                 <div class="rating_box">
-                    <input type="button" value=" + " class="vote_button"/>
-                    {{ message.rating }}
-                    <input type="button" value=" - " class="vote_button"/>
+                    <a href="{% url 'forum:new_message' post.id %}">&#9650;</a>
+                    {{ msg.rating }}
+                    <a href="{% url 'forum:msg_vote_down' msg.id %}">&#9660;</a>
                 </div>
-                {% if message.author is not None %} {{ message.author }} {% else %} message #{{ message.id }} {% endif %}
-                {% if message.root_message is not None %}
-                    replies to
-                    {% if message.root_message.author is not None %}
-                        {{ message.root_message.author }}
-                    {% else %}
-                        message #{{ message.root_message.id }}
-                    {% endif %}
-                {% endif %}</div>
-            <div class="message">{{ message.text }}</div>
+                {{ msg.get_author }} {% if msg.root_message is not None %} replies to {{ msg.root_message.get_author }} {% endif %}
+            </div>
+            <div class="message">{{ msg.text }}</div>
         </div>
         {% endfor %}
+    </div>
+    <div class="pagination" align="center">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
     </div>
 </body>
 </html>

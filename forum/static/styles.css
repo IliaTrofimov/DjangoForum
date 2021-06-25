@@ -5,12 +5,11 @@
 
 body{
     background-color: #e0e0e0;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
 }
 
 
-.pagination{
-    margin-bottom: 20px
-}
+.pagination{ margin-bottom: 20px; }
 
 
 .top{
@@ -18,89 +17,77 @@ body{
     font-weight: 900;
     background-color: cornflowerblue;
     padding: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     height: 24pt;
     color: #f1f1f1;;
 }
 .top a{ text-decoration: none; }
 .top a:visited{ color: #f1f1f1; }
-.top a:hover{ color: white; }
-.top a:active{ color: white; }
+.top a:hover{ color: cornflowerblue; }
+.top a:active{ color: cornflowerblue; }
 
 .top_block{
     float: left;
-    margin-left: 20px;
+    margin-left: 1%;
+    margin-right: 3%;
 }
 
+.top_block:hover{
+    background-color: #f1f1f1;
+    color: cornflowerblue;
+}
+
+
+.content{ font-size: 12pt; }
+
+
+.post_box, .message_box{
+    border: 0px solid white;
+    background-color: white;
+    margin: 10px 15% 20px 15%;
+}
 
 .post_box{
-    font-size: larger;
-    background-color: whitesmoke;
-    padding: 20px;
-    margin: 5px 20% -10px 15%;
-    border: 0px solid;
-    border-radius: 15px;
-}
-
-
-.messages_list{
-    margin: 0 20% 40px 15%;
-    padding-top: 40px;
-    font-size: 14pt;
+    border-radius: 10px;
+    padding: 15px;
 }
 
 .message_box{
-    margin-top: 15px;
-    background-color: whitesmoke;
-    border: 0px solid;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: 0;
 }
 
-.message_info{
-    background-color: rgba(100, 149, 237, 0.6);
-    height: 19pt;
+.message{ padding: 10px; }
+
+.info_header{
+    background-color: cornflowerblue;
     padding: 5px;
+    color: white;
 }
 
 .rating_box{
-    margin-right: 20px;
     float: left;
+    color: lightgray;
+    margin-right: 20px;
+    height: 100%;
 }
 .rating_box a{ text-decoration: none; }
+.rating_box a:visited{ color: lightgray; }
+.rating_box a:hover{ color: white; }
+.rating_box a:active{ color: white; }
 
-.message{
+
+.input_form, .title_form{
     padding: 10px;
-}
-
-.vote_button{
-    font-weight: bold;
-    font-size: 15pt;
-}
-
-
-.msg_form{
-    font-size: 12pt;
-    padding: 10px
-}
-
-.input_post{
-    width: 97%;
-    font-size: 15pt;
-    padding: 10px;
-    margin-bottom: 15px;
-}
-#input_post_text{
-    min-height: 180pt;
+    font-size: 14pt;
+    width: 100%;
+    box-sizing: border-box;
     resize: none;
 }
-#input_post_author{
-    width: 60%;
-    margin-right: 20px;
-}
-
-.button_submit{
-    font-size: 15pt;
-    padding: 10px;
-    min-width: 100px;
+.input_form{ min-height: 56pt; }
+.submit_btn{
+    padding: 3px 10px 2px 10px;
+    font-size: 14pt;
+    margin: 5px 10px 10px 10px;
 }

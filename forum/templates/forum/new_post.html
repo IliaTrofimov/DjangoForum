@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New post</title>
+    <link rel="stylesheet" href="{% static "styles.css" %}"/>
+</head>
+<body>
+    <div class="top">
+        <div class="top_block"><a href="{% url 'forum:index' %}">Forum</a></div>
+    </div>
+    <div class="post_box">
+        <form action="" method="post" id="new_msg">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Send" class="submit_btn"/>
+            <label>Will be signed by {{ user }}</label>
+        </form>
+    </div>
+</body>
+</html>

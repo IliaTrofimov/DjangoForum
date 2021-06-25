@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -6,8 +7,9 @@ class BaseTextBlock(models.Model):
         abstract = True
 
     text = models.CharField(max_length=1024)
-    author = models.CharField(max_length=50, blank=True, default='unknown')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     rating = models.IntegerField(default=0, blank=True)
+    upload_date = models.DateTimeField()
 
     def get_author(self):
         return f'{type(self).__name__} #{self.id}' if self.author is None else self.author
@@ -16,11 +18,13 @@ class BaseTextBlock(models.Model):
         if len(self.text) <= max_length:
             return self.text
         else:
-            return self.text[:max_length] + '...'
+            temp = self.text[:max_length].split()
+            return ' '.join(temp[:len(temp) - 1]) + '...'
 
 
 class Post(BaseTextBlock):
     title = models.CharField(max_length=100)
+    upload_date = models.DateTimeField()
 
     def get_next(self):
         try:
@@ -49,6 +53,7 @@ class Message(BaseTextBlock):
     root_post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True)
     root_message = models.OneToOneField('Message', related_name='+', blank=True, null=True, on_delete=models.CASCADE)
     answers = models.ManyToManyField('Message', related_name='+', blank=True)
+    upload_date = models.DateTimeField()
 
     def get_depth(self):
         if self.root_message is None:

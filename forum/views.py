@@ -6,7 +6,7 @@ from django.views import generic
 from django.http.response import HttpResponseRedirect
 
 
-from .models import Post, Message
+from .models import Post, Message, MessageVote, PostVote
 from .forms import MessageForm, PostForm
 
 
@@ -60,19 +60,21 @@ class NewPostView(generic.View):
 def vote_message(request, msg_id, inc: int):
     try:
         msg = Message.objects.get(pk=msg_id)
+        MessageVote(user=request.user, message=msg, is_vote_up=(inc > 0)).save()
         msg.rating += inc
         msg.save()
-    except Message.DoesNotExist:
+    except:
         pass
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def vote_post(request, post_id, inc: int):
     try:
-        post = Post.objects.get(pk=post_id)
+        post = Message.objects.get(pk=post_id)
+        PostVote(user=request.user, post=post, is_vote_up=(inc > 0)).save()
         post.rating += inc
         post.save()
-    except Post.DoesNotExist:
+    except:
         pass
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

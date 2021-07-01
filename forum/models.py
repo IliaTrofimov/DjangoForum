@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 
 
@@ -7,14 +7,13 @@ class BaseTextBlock(models.Model):
         abstract = True
 
     text = models.CharField(max_length=1024)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     rating = models.IntegerField(default=0, blank=True)
     upload_date = models.DateTimeField()
 
     def get_author(self):
         return f'{type(self).__name__} #{self.id}' if self.author is None else self.author
 
-    def brief_info(self, max_length=120):
+    def brief_info(self, max_length=300):
         if len(self.text) <= max_length:
             return self.text
         else:
@@ -25,6 +24,7 @@ class BaseTextBlock(models.Model):
 class Post(BaseTextBlock):
     title = models.CharField(max_length=100)
     upload_date = models.DateTimeField()
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="post_author")
 
     def get_next(self):
         try:
@@ -54,6 +54,7 @@ class Message(BaseTextBlock):
     root_message = models.OneToOneField('Message', related_name='+', blank=True, null=True, on_delete=models.CASCADE)
     answers = models.ManyToManyField('Message', related_name='+', blank=True)
     upload_date = models.DateTimeField()
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="msg_author")
 
     def get_depth(self):
         if self.root_message is None:
@@ -64,3 +65,27 @@ class Message(BaseTextBlock):
 
     def __str__(self):
         return self.brief_info(30)
+
+
+class PostVote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    is_vote_up = models.BooleanField()
+
+    def __str__(self):
+        return f"{self.user} voted {self.is_vote_up} for post #{self.post.id}"
+
+    class Meta:
+        unique_together = (("user", "post"),)
+
+
+class MessageVote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    is_vote_up = models.BooleanField()
+
+    def __str__(self):
+        return f"{self.user} voted {self.is_vote_up} for message #{self.message.id}"
+
+    class Meta:
+        unique_together = (("user", "message"),)

@@ -56,14 +56,23 @@
                         {{ msg.rating }}
                         <a href="{% url 'forum:msg_vote_down' msg.id %}">&#9660;</a>
                     </div>
+
                     {{ msg.get_author }}
                     {% if msg.root_message is not None %} replies to {{ msg.root_message.get_author }} {% endif %}
-                    &#x2007|&#x2007 <a onclick="fill_reply_id('reply_id_field', {{ msg.id }})">reply</a>
+                    
+                    &#x2007|&#x2007
+                     <a onclick="fill_reply_id('reply_id_field', {{ msg.id }})">reply</a>
+                    
                     {% if user.is_superuser or user.authorized and msg.author == user %}
                         &#x2007|&#x2007 <a href="{% url 'forum:msg_delete' msg.id %}">delete</a>
                     {% endif %}
                 </div>
-                <div class="message">{{ msg.text }}</div>
+                <div class="message">
+                    {% if msg.root_message is not None %}
+                    <div class="quote_box">{{ msg.root_message.brief_info }}</div>
+                    {% endif %}
+                    {{ msg.text }}
+                </div>
             </div>
             {% endfor %}
         </div>
